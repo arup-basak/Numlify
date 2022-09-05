@@ -5,7 +5,10 @@
       <map>
         <entry key="..\:/Users/arupb/AndroidStudioProjects/Numlify/app/src/main/res/drawable/cursor.xml" value="0.3625" />
         <entry key="..\:/Users/arupb/AndroidStudioProjects/Numlify/app/src/main/res/drawable/edit_text.xml" value="0.3635" />
+        <entry key="..\:/Users/arupb/AndroidStudioProjects/Numlify/app/src/main/res/drawable/history_card_background.xml" value="0.3625" />
+        <entry key="..\:/Users/arupb/AndroidStudioProjects/Numlify/app/src/main/res/layout/activity_history.xml" value="0.3625" />
         <entry key="..\:/Users/arupb/AndroidStudioProjects/Numlify/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/arupb/AndroidStudioProjects/Numlify/app/src/main/res/layout/recycler_view_item.xml" value="0.3625" />
       </map>
     </option>
   </component>
