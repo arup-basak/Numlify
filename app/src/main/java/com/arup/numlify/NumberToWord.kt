@@ -1,4 +1,4 @@
-package com.arup.jdbc
+package com.arup.numlify
 
 internal object NumberToWord {
     private fun ztn(`in`: Int): String {
@@ -17,8 +17,8 @@ internal object NumberToWord {
         }
     }
 
-    private fun convert(input: String): String {
-        var input = input
+    private fun convert(numberString: String): String {
+        var input = numberString
         input = input.replace("(0)", "")
         input = input.replace("(1)", "ty ")
         input = input.replace("(2)", " Hundred ")
@@ -57,8 +57,8 @@ internal object NumberToWord {
     }
 
     @JvmStatic
-    fun run(number: String): String {
-        var number = number
+    fun run(numb: String): String {
+        var number = numb
         val len = number.length
         val sb = StringBuilder()
         var str: String
