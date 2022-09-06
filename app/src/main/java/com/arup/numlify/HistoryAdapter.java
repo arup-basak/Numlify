@@ -1,6 +1,7 @@
 package com.arup.numlify;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.Set;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
-    private final List<History> histories;
-    HistoryAdapter(List<History> histories) {
-        this.histories = histories;
+    private final Cursor cursor;
+
+    HistoryAdapter(Cursor cursor) {
+        this.cursor = cursor;
     }
 
     @NonNull
@@ -28,14 +30,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        holder.headingTextView.setText(histories.get(position).getValue());
-        holder.textView.setText(histories.get(position).getAns());
-        holder.time.setText(histories.get(position).getTime());
+        cursor.moveToNext();
+        holder.headingTextView.setText(cursor.getString(0));
+        holder.textView.setText(cursor.getString(1));
+        holder.time.setText(cursor.getString(2));
     }
 
     @Override
     public int getItemCount() {
-        return histories.size();
+        return cursor.getCount();
     }
 
     static class HistoryViewHolder extends RecyclerView.ViewHolder {

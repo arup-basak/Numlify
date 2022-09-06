@@ -1,12 +1,10 @@
 package com.arup.numlify
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 
 class HistoryActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -15,8 +13,13 @@ class HistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
+//        val bundle: Bundle? = intent.getBundleExtra("arrayOfHistory")
+
+        val db = DBHelper(this)
+
+
         recyclerView = findViewById(R.id.history_recycler)
-        recyclerView.adapter = HistoryAdapter(null)
+        recyclerView.adapter = HistoryAdapter(db.data)
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }

@@ -11,10 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
-import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var textView: TextView
     private lateinit var editText: EditText
     private lateinit var share: ImageButton
@@ -23,24 +23,10 @@ class MainActivity : AppCompatActivity() {
     private var PREFERENCE_KEY: String = "SavedHistoryPrf"
 
     private lateinit var GSON: Gson
-    private lateinit var histories: Set<String>
-
-    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        sharedPreference = getSharedPreferences(PREFERENCE_KEY,Context.MODE_PRIVATE)
-
-        try {
-            getSharedPref()
-        }
-        catch (e: Exception) {
-            Toast.makeText(this, "Crashes", Toast.LENGTH_SHORT).show()
-            histories = HashSet()
-        }
-
 
         editText = findViewById(R.id.number)
         textView = findViewById(R.id.textView)
@@ -56,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         editText.setOnEditorActionListener { view, actionId, event ->
             if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
-                saveInPref()
+                saveInDatabase(editText.text.toString(), textView.text.toString())
             }
             false
         }
@@ -94,18 +80,12 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent.createChooser(intent, "Share Via"))
     }
 
-    fun saveInPref() {
-        val editor = sharedPreference.edit()
-        editor.putStringSet("data", histories)
-        editor.apply()
-    }
 
-    fun getSharedPref() {
-        histories = sharedPreference.getStringSet("data", HashSet<String>()) as Set<String>
-    }
-
-    fun getCurrentTime(): String {
-//        TODO(UPDATED SOON)
-        return "v"
+    private fun saveInDatabase(value: String, answer: String?) {
+        val db = DBHelper(this)
+        if(answer.isNullOrEmpty()) {
+            db.insert(value, NumberToWord.run(value))
+        }
+        db.insert(value, answer)
     }
 }
