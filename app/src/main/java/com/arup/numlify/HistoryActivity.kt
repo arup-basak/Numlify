@@ -16,7 +16,8 @@ class HistoryActivity : AppCompatActivity() {
 
 
         recyclerView = findViewById(R.id.history_recycler)
-        recyclerView.adapter = HistoryAdapter(db.data)
+        recyclerView.adapter = HistoryAdapter(db.data, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 }

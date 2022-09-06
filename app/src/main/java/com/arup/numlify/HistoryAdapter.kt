@@ -1,55 +1,60 @@
-package com.arup.numlify;
+package com.arup.numlify
 
-import android.content.Context;
-import android.database.Cursor;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.database.Cursor
+import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import com.arup.numlify.HistoryAdapter.HistoryViewHolder
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.View
+import com.arup.numlify.R
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
-    private final Cursor cursor;
-
-    HistoryAdapter(Cursor cursor) {
-        this.cursor = cursor;
+class HistoryAdapter internal constructor(
+    private val cursor: Cursor,
+    private val context: Context
+) : RecyclerView.Adapter<HistoryViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
+        val context = parent.context
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.recycler_view_history, parent, false)
+        return HistoryViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater  = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_view_history, parent, false);
-        return new HistoryViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        cursor.moveToNext();
-        holder.headingTextView.setText(cursor.getString(0));
-        holder.textView.setText(cursor.getString(1));
-        holder.time.setText(cursor.getString(2));
-    }
-
-    @Override
-    public int getItemCount() {
-        return cursor.getCount();
-    }
-
-    static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        final TextView headingTextView;
-        final TextView textView;
-        final TextView time;
-        public HistoryViewHolder(View view) {
-            super(view);
-            headingTextView = view.findViewById(R.id.numb);
-            textView = view.findViewById(R.id.word);
-            time = view.findViewById(R.id.time);
+    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+        cursor.moveToNext()
+        holder.headingTextView.text = cursor.getString(0)
+        holder.textView.text = cursor.getString(1)
+        holder.time.text = cursor.getString(2)
+        holder.card.setOnClickListener {
+            val message = "Copied text form of " + holder.headingTextView.text.toString()
+            val clipboard: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData: ClipData = ClipData.newPlainText("Text Copied!", holder.textView.text.toString())
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            clipboard.setPrimaryClip(clipData)
         }
     }
 
-}
+    override fun getItemCount(): Int {
+        return cursor.count
+    }
 
+    class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val headingTextView: TextView
+        val textView: TextView
+        val time: TextView
+        val card: View
+
+        init {
+            headingTextView = view.findViewById(R.id.numb)
+            textView = view.findViewById(R.id.word)
+            time = view.findViewById(R.id.time)
+            card = view.findViewById(R.id.history_card)
+        }
+    }
+}
