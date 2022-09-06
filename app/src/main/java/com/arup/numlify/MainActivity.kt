@@ -4,13 +4,14 @@ import android.content.*
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import com.google.gson.Gson
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,10 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var share: View
     private lateinit var history_button: View
 
-    private var PREFERENCE_KEY: String = "SavedHistoryPrf"
-
-    private lateinit var GSON: Gson
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,15 +29,17 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.textView)
         share = findViewById(R.id.share)
         history_button = findViewById(R.id.open_history)
-        GSON = Gson()
         var str = ""
 
         editText.addTextChangedListener {
             str = NumberToWord.run(editText.text.toString())
+
+            val animation: Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.anim)
             textView.text = str
+            textView.startAnimation(animation)
         }
 
-        editText.setOnEditorActionListener { view, actionId, event ->
+        editText.setOnEditorActionListener { v, actionId, event ->
             if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
                 saveInDatabase(editText.text.toString(), textView.text.toString())
             }
