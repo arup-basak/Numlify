@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textView: TextView
     private lateinit var editText: EditText
     private lateinit var share: View
-    private lateinit var history_button: View
-    private lateinit var help_text: TextView
-    private lateinit var fade_in: Animation
-    private lateinit var fade_out: Animation
+    private lateinit var historyButton: View
+    private lateinit var helpText: TextView
+    private lateinit var fadeIn: Animation
+    private lateinit var fadeOut: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,27 +31,27 @@ class MainActivity : AppCompatActivity() {
         editText = findViewById(R.id.number)
         textView = findViewById(R.id.textView)
         share = findViewById(R.id.share)
-        history_button = findViewById(R.id.open_history)
-        help_text = findViewById(R.id.help_text)
+        historyButton = findViewById(R.id.open_history)
+        helpText = findViewById(R.id.help_text)
 
-        fade_in = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
-        fade_out = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out)
+        fadeIn = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
+        fadeOut = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out)
 
         var str = ""
 
-        help_text.alpha = 0.0F
+        helpText.alpha = 0.0F
         share.alpha = 0.0F
 
         editText.addTextChangedListener {
             str = NumberToWord.run(editText.text.toString())
 
             textView.text = str
-            textView.startAnimation(fade_in)
+            textView.startAnimation(fadeIn)
 
             invisibleView(str.isNotEmpty())
         }
 
-        editText.setOnEditorActionListener { v, actionId, event ->
+        editText.setOnEditorActionListener { _, actionId, event ->
             if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
                 saveInDatabase(editText.text.toString(), textView.text.toString())
             }
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        history_button.setOnClickListener {
+        historyButton.setOnClickListener {
             val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
@@ -101,15 +101,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun invisibleView(boolean: Boolean) {
-        if(boolean && help_text.alpha == 0F) {
-            help_text.startAnimation(fade_in)
-            share.startAnimation(fade_in)
-            help_text.alpha = 1F
+        if(boolean && helpText.alpha == 0F) {
+            helpText.startAnimation(fadeIn)
+            share.startAnimation(fadeIn)
+            helpText.alpha = 1F
             share.alpha = 1F
         }
-        else if (!boolean && help_text.alpha == 1F) {
-            help_text.startAnimation(fade_out)
-            share.startAnimation(fade_out)
+        else if (!boolean && helpText.alpha == 1F) {
+            helpText.startAnimation(fadeOut)
+            share.startAnimation(fadeOut)
         }
 
     }
