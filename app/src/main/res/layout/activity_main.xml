@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/word"
+        android:id="@+id/help_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -58,24 +58,10 @@
         android:layout_marginBottom="8dp"
         android:gravity="right"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/word"
+        app:layout_constraintBottom_toTopOf="@+id/help_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/open_history"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:icon="@drawable/ic_baseline_history_24"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@color/text_color" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/share"
@@ -87,6 +73,20 @@
             android:insetRight="0dp"
             android:insetBottom="0dp"
             app:icon="@drawable/ic_baseline_share_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/text_color" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_history"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_history_24"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconTint="@color/text_color" />

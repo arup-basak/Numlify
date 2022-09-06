@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editText: EditText
     private lateinit var share: View
     private lateinit var history_button: View
+    private lateinit var help_text: TextView
+    private lateinit var fade_in: Animation
+    private lateinit var fade_out: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +32,23 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.textView)
         share = findViewById(R.id.share)
         history_button = findViewById(R.id.open_history)
+        help_text = findViewById(R.id.help_text)
+
+        fade_in = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
+        fade_out = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out)
+
         var str = ""
+
+        help_text.alpha = 0.0F
+        share.alpha = 0.0F
 
         editText.addTextChangedListener {
             str = NumberToWord.run(editText.text.toString())
 
-            val animation: Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.anim)
             textView.text = str
-            textView.startAnimation(animation)
+            textView.startAnimation(fade_in)
+
+            invisibleView(str.isNotEmpty())
         }
 
         editText.setOnEditorActionListener { v, actionId, event ->
@@ -86,5 +98,19 @@ class MainActivity : AppCompatActivity() {
             db.insert(value, NumberToWord.run(value))
         }
         db.insert(value, answer)
+    }
+
+    private fun invisibleView(boolean: Boolean) {
+        if(boolean && help_text.alpha == 0F) {
+            help_text.startAnimation(fade_in)
+            share.startAnimation(fade_in)
+            help_text.alpha = 1F
+            share.alpha = 1F
+        }
+        else if (!boolean && help_text.alpha == 1F) {
+            help_text.startAnimation(fade_out)
+            share.startAnimation(fade_out)
+        }
+
     }
 }

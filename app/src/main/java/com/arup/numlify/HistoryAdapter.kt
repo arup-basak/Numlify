@@ -4,16 +4,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.database.Cursor
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.arup.numlify.HistoryAdapter.HistoryViewHolder
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import com.arup.numlify.R
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 
 class HistoryAdapter internal constructor(
     private val cursor: Cursor,
@@ -52,7 +49,7 @@ class HistoryAdapter internal constructor(
 
         init {
             headingTextView = view.findViewById(R.id.numb)
-            textView = view.findViewById(R.id.word)
+            textView = view.findViewById(R.id.help_text)
             time = view.findViewById(R.id.time)
             card = view.findViewById(R.id.history_card)
         }

@@ -23,7 +23,7 @@
       tools:text="@tools:sample/lorem" />
 
   <TextView
-      android:id="@+id/word"
+      android:id="@+id/help_text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
