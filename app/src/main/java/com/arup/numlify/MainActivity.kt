@@ -3,9 +3,9 @@ package com.arup.numlify
 import android.content.*
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var textView: TextView
     private lateinit var editText: EditText
-    private lateinit var share: ImageButton
-    private lateinit var history_button: ImageButton
+    private lateinit var share: View
+    private lateinit var history_button: View
 
     private var PREFERENCE_KEY: String = "SavedHistoryPrf"
 

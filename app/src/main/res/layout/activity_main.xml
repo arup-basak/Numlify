@@ -63,20 +63,33 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/open_history"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:minWidth="35dp"
-            android:minHeight="50dp"
-            app:srcCompat="@drawable/ic_baseline_history_24" />
+            android:layout_margin="4dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_history_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/text_color" />
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/share"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:minWidth="35dp"
-            android:minHeight="50dp"
-            app:srcCompat="@drawable/ic_baseline_share_24" />
+            android:layout_margin="4dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_share_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/text_color" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
