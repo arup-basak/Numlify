@@ -3,4 +3,7 @@
     <string name="tap_text_to_copy">Tap Text To Copy</string>
     <string name="tap_card_to_copy_text">Tap Card To Copy Text</string>
     <string name="history">History</string>
+    <string name="type_number">Type Number…</string>
+    <string name="share_text_if_output_is_not_null">share text if output is not null</string>
+    <string name="check_history">check history</string>
 </resources>
