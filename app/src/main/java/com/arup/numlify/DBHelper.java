@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 public class DBHelper extends SQLiteOpenHelper {
     String TABLE_NAME = "HISTORY";
@@ -20,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
-                + NUMBER + " TEXT,"
+                + NUMBER + " TEXT ,"
                 + ANSWER + " TEXT,"
                 + TIME + " TEXT)";
         db.execSQL(query);
@@ -40,11 +42,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor.getCount() != 0;
     }
 
-    private void update(String val) {
-
+    @SuppressLint("Recycle")
+    private void update(String value) {
+        String query = "UPDATE " + TABLE_NAME + " SET " + TIME + "=" + getCurrentTime() + " WHERE " + NUMBER + "=" + value;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.rawQuery(query, new String[0]);
     }
 
     public void insert(String val, String ans){
+        if(exists(val)) {
+            update(val);
+            Log.d("dvfuvd", "updated");
+            return;
+        }
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(NUMBER, val);
