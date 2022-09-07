@@ -58,6 +58,20 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/share"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_share_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/text_color" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/open_history"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
@@ -71,18 +85,5 @@
             app:iconPadding="0dp"
             app:iconTint="@color/text_color" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/share"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:icon="@drawable/ic_baseline_share_24"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@color/text_color" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

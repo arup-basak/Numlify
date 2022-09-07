@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.res.Configuration
 import android.database.Cursor
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,13 @@ class HistoryAdapter internal constructor(
         holder.textView.text = cursor.getString(1)
         holder.date.text = arr[0]
         holder.time.text = arr[1]
+
+        val orientation: Int = context.resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            holder.textView.maxEms = 12
+        }
+
+
         holder.card.setOnClickListener {
             val message = "Copied text form of " + holder.headingTextView.text.toString()
             val clipboard: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
