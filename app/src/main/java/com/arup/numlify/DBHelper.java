@@ -6,8 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.format.Time;
-import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
     String TABLE_NAME = "HISTORY";
