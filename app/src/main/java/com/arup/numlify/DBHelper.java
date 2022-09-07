@@ -6,8 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.format.Time;
 import android.util.Log;
-import android.widget.Toast;
 
 public class DBHelper extends SQLiteOpenHelper {
     String TABLE_NAME = "HISTORY";
@@ -52,7 +52,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void insert(String val, String ans){
         if(exists(val)) {
             update(val);
-            Log.d("dvfuvd", "updated");
             return;
         }
         SQLiteDatabase db = this.getWritableDatabase();
@@ -77,6 +76,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private String getCurrentTime() {
-        return String.valueOf((int) (Math.random() * 1000));
+        return String.valueOf(System.currentTimeMillis());
     }
 }
