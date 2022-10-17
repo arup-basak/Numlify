@@ -58,7 +58,11 @@ internal object NumberToWord {
 
     @JvmStatic
     fun run(numb: String): String {
-        var number = numb
+        var number: String = try {
+            numb.toLong().toString()
+        } catch (_: Exception) {
+            numb
+        }
         val len = number.length
         val sb = StringBuilder()
         var str: String
