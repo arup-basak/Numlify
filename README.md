@@ -40,6 +40,13 @@ Go to the project directory
 ![Logo](https://i.ibb.co/BPmDqbc/applogo.png)
 
 
+## To Update Logo Contact with Me
+```
+  https://drive.google.com/file/d/10-iTz29KDhZLSXp1_otRMaBhYkGcDNfs/view?usp=share_link
+```
+
+
+
 ## 🛠 Skills
 Android, Kotlin, Java
 
