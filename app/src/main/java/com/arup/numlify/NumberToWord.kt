@@ -17,7 +17,7 @@ internal object NumberToWord {
         }
     }
 
-    private fun convert(numberString: String): String {
+    private fun convertToWord(numberString: String): String {
         var input = numberString
         input = input.replace("(0)", "")
         input = input.replace("(1)", "ty ")
@@ -56,8 +56,16 @@ internal object NumberToWord {
         return input
     }
 
-    @JvmStatic
-    fun run(numb: String): String {
+    private fun getAfterPoint(number: String): String {
+        val sb = StringBuilder()
+        for(ch in number) {
+            sb.append(ztn(ch - '0')).append(" ")
+        }
+        return sb.dropLast(1).toString()
+    }
+
+
+    private fun convert(numb: String): String {
         var number: String = try {
             numb.toLong().toString()
         } catch (_: Exception) {
@@ -71,6 +79,29 @@ internal object NumberToWord {
             sb.append(str).append('(').append(len - i - 1).append(')')
         }
         number = sb.toString()
-        return convert(number)
+        return convertToWord(number)
     }
+
+    private fun countContains(s: String): Int {
+        return s.count {
+            it == '.'
+        }
+    }
+
+    @JvmStatic
+    fun run(numb: String): String {
+        val count = countContains(numb)
+        if(count == 0) {
+            return convert(numb)
+        }
+        else if(count == 1) {
+            val numArr = numb.split('.')
+            if(numArr[1].isEmpty()) {
+                return run(numArr[0])
+            }
+            return "${run(numArr[0])} Point ${getAfterPoint(numArr[1])}"
+        }
+        return "Error, There are multiple points"
+    }
+
 }
