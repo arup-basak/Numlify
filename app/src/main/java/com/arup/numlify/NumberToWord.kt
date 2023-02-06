@@ -82,24 +82,18 @@ internal object NumberToWord {
         return convertToWord(number)
     }
 
-    private fun countContains(s: String): Int {
-        return s.count {
-            it == '.'
-        }
-    }
-
     @JvmStatic
     fun run(numb: String): String {
-        val count = countContains(numb)
+        val count = numb.count { it == '.' }
         if(count == 0) {
             return convert(numb)
         }
         else if(count == 1) {
             val numArr = numb.split('.')
             if(numArr[1].isEmpty()) {
-                return run(numArr[0])
+                return convert(numArr[0])
             }
-            return "${run(numArr[0])} Point ${getAfterPoint(numArr[1])}"
+            return "${convert(numArr[0])} Point ${getAfterPoint(numArr[1])}"
         }
         return "Error, There are multiple points"
     }
