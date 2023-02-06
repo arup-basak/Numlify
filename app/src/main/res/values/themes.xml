@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.Numlify" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.NumlifyLight1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/color1</item>
         <item name="colorOnPrimary">#60020202</item>
         <item name="android:windowBackground">@color/background</item>
@@ -13,3 +13,4 @@
         <item name="android:textColorHighlight">@color/color1</item>
     </style>
 </resources>
+
