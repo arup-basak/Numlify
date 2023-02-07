@@ -1,51 +1,50 @@
-
 # Numlify
 
-This is a simple app, that converts Number to Words, and store it into SQLite database
+Numlify is a simple app that converts numbers to words and stores the results in an SQLite database.
 
-
-## Authors
+## Author
 
 - [@arup-basak](https://github.com/arup-basak)
 
 ## Color Reference
 
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
+| Color            | Hex                                                              |
+|------------------|------------------------------------------------------------------|
 | Background Color | ![#FFF5E4](https://via.placeholder.com/10/FFF5E4?text=+) #FFF5E4 |
-| Text Color | ![#850E35](https://via.placeholder.com/10/850E35?text=+) #850E35 |
-| Card or Button | ![#FFC4C4](https://via.placeholder.com/10/FFC4C4?text=+) #FFC4C4 |
-| Status Bar | ![#EE6983](https://via.placeholder.com/10/EE6983?text=+) #EE6983 |
+| Text Color       | ![#850E35](https://via.placeholder.com/10/850E35?text=+) #850E35 |
+| Card or Button   | ![#FFC4C4](https://via.placeholder.com/10/FFC4C4?text=+) #FFC4C4 |
+| Status Bar       | ![#EE6983](https://via.placeholder.com/10/EE6983?text=+) #EE6983 |
+
+## Logo:
+
+![Logo](https://i.ibb.co/BPmDqbc/applogo.png)
 
 
-## Screenshots
+## Screenshot
 
 ![App Screenshot](https://i.ibb.co/0syD20n/numlify-2.jpg)
 
+## Running the app locally
 
-## Run Locally
+To run the app locally, follow these steps:
 
-Clone the project
+1. Clone the project
 
 ```bash
   git clone https://github.com/arup-basak/Numlify.git
 ```
 
-Go to the project directory
+2. Go to the project directory
 
 ```bash
   cd Numlify
 ```
 
-![Logo](https://i.ibb.co/BPmDqbc/applogo.png)
-
 
 ## To Update Logo Contact with Me
 ```
-  https://drive.google.com/file/d/10-iTz29KDhZLSXp1_otRMaBhYkGcDNfs/view?usp=share_link
+https://drive.google.com/file/d/10-iTz29KDhZLSXp1_otRMaBhYkGcDNfs/view?usp=share_link
 ```
-
-
 
 ## 🛠 Skills
 Android, Kotlin, Java
@@ -58,4 +57,3 @@ I'm a Arup Basak, a Full stack developer, this is the first app to be released o
 ## Feedback
 
 If you have any feedback, please reach out to us at email.arupbasak@gmail.com
-
