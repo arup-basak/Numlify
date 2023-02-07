@@ -13,7 +13,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.arup.numlify.HistoryAdapter.HistoryViewHolder
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +34,7 @@ class HistoryAdapter internal constructor(
         try {
             arr = timeLongToString(cursor.getString(2).toLong())
         }
-        catch (e: Exception) {}
+        catch (_: Exception) {}
 
         holder.headingTextView.text = cursor.getString(0)
         holder.textView.text = cursor.getString(1)
@@ -80,32 +79,11 @@ class HistoryAdapter internal constructor(
     @SuppressLint("SimpleDateFormat")
     private fun timeLongToString(timeLong: Long): Array<String> {
         val dt = Date(timeLong)
-        val df: DateFormat = SimpleDateFormat("dd:MM:yyyy HH:mm")
-        val str = df.format(dt)
-
-        var date = str.substring(0, 10)
-        var time = str.substring(11)
-        val hr = time.substring(0, 2).toInt()
-        time = time.substring(2)
-        val timeAdd = arrayOf("am", "pm")
-        if (hr > 12) {
-            time += (hr - 12).toString() + " " + timeAdd[1]
-        } else {
-            time = hr.toString() + time + " " + timeAdd[0]
-        }
-
-        val month = arrayOf(
-            "Err",
-            "Jan", "Feb", "Mar",
-            "Apr", "May", "June",
-            "Jul", "Aug", "Sept",
-            "Oct", "Nov", "Dec"
+        val df = SimpleDateFormat("dd MMM yyyy hh:mm a")
+        val timeStr = df.format(dt)
+        return arrayOf(
+            timeStr.substring(0, 11),
+            timeStr.substring(12)
         )
-
-        date = date.substring(0, 2) + " " +
-                month[date.substring(3, 5).toInt()] + " " +
-                date.substring(6)
-
-        return arrayOf(date, time)
     }
 }
