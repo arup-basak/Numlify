@@ -19,83 +19,82 @@ internal object NumberToWord {
 
     private fun convertToWord(numberString: String): String {
         var input = numberString
-        input = input.replace("(0)", "")
-        input = input.replace("(1)", "ty ")
-        input = input.replace("(2)", " Hundred ")
-        input = input.replace("(3)", " Thousand ")
-        input = input.replace("(4)", "ty ")
-        input = input.replace("(5)", " Lakh ")
-        input = input.replace("(6)", "ty ")
-        input = input.replace("(7)", " Crore ")
-        input = input.replace("(8)", "ty ")
-        input = input.replace("(9)", " Hundred ")
-        input = input.replace("(10)", " Thousand ")
-        input = input.replace("(11)", " Lakh ")
+        val specialCases = mapOf(
+            "Onety One" to "Eleven",
+            "Onety Two" to "Twelve",
+            "Onety Three" to "Thirteen",
+            "Onety Four" to "Fourteen",
+            "Onety Five" to "Fifteen",
+            "Onety Six" to "Sixteen",
+            "Onety Seven" to "Seventeen",
+            "Onety Eight" to "Eighteen",
+            "Onety Nine" to "Nineteen",
+            "Twoty" to "Twenty",
+            "Threety" to "Thirty",
+            "Fourty" to "Forty",
+            "Fivety" to "Fifty",
+            "Eightty" to "Eighty",
+            " Zeroty" to "",
+            " Zero" to "",
+            "Onety" to "Ten",
+            "Thousand Hundred" to "Thousand",
+            "Lakh Thousand" to "Lakh",
+            "Crore Lakh" to "Crore"
+        )
+        val replaceCases = mapOf(
+            "(0)" to "",
+            "(1)" to "ty ",
+            "(2)" to " Hundred ",
+            "(3)" to " Thousand ",
+            "(4)" to "ty ",
+            "(5)" to " Lakh ",
+            "(6)" to "ty ",
+            "(7)" to " Crore ",
+            "(8)" to "ty ",
+            "(9)" to " Hundred ",
+            "(10)" to " Thousand ",
+            "(11)" to " Lakh "
+        )
 
-        input = input.replace("Onety One".toRegex(), "Eleven")
-        input = input.replace("Onety Two".toRegex(), "Twelve")
-        input = input.replace("Onety Three".toRegex(), "Thirteen")
-        input = input.replace("Onety Four".toRegex(), "Fourteen")
-        input = input.replace("Onety Five".toRegex(), "Fifteen")
-        input = input.replace("Onety Six".toRegex(), "Sixteen")
-        input = input.replace("Onety Seven".toRegex(), "Seventeen")
-        input = input.replace("Onety Eight".toRegex(), "Eighteen")
-        input = input.replace("Onety Nine".toRegex(), "Nineteen")
-        input = input.replace("Twoty".toRegex(), "Twenty")
-        input = input.replace("Threety".toRegex(), "Thirty")
-        input = input.replace("Fourty".toRegex(), "Forty")
-        input = input.replace("Fivety".toRegex(), "Fifty")
-        input = input.replace("Eightty".toRegex(), "Eighty")
-
-        input = input.replace(" Zeroty".toRegex(), "")
-        input = input.replace(" Zero".toRegex(), "")
-        input = input.replace("Onety".toRegex(), "Ten")
-        input = input.replace("Thousand Hundred".toRegex(), "Thousand")
-        input = input.replace("Lakh Thousand".toRegex(), "Lakh")
-        input = input.replace("Crore Lakh".toRegex(), "Crore")
+        for ((key, value) in replaceCases) {
+            input = input.replace(key, value)
+        }
+        for ((key, value) in specialCases) {
+            input = input.replace(key.toRegex(), value)
+        }
         return input
     }
 
     private fun getAfterPoint(number: String): String {
-        val sb = StringBuilder()
-        for(ch in number) {
-            sb.append(ztn(ch - '0')).append(" ")
-        }
-        return sb.dropLast(1).toString()
+        return number.map { ztn(it - '0') }.joinToString(" ").dropLast(0)
     }
 
-
     private fun convert(numb: String): String {
-        var number: String = try {
-            numb.toLong().toString()
+        val number = try {
+            numb.toLong()
         } catch (_: Exception) {
-            numb
+            return numb
         }
-        val len = number.length
-        val sb = StringBuilder()
-        var str: String
-        for (i in 0 until len) {
-            str = ztn(number[i].code - '0'.code)
-            sb.append(str).append('(').append(len - i - 1).append(')')
-        }
-        number = sb.toString()
-        return convertToWord(number)
+        val numberString = number.toString().mapIndexed { i, c ->
+            "${ztn(c - '0')}(${number.toString().length - i - 1})"
+        }.joinToString("")
+        return convertToWord(numberString)
     }
 
     @JvmStatic
     fun run(numb: String): String {
-        val count = numb.count { it == '.' }
-        if(count == 0) {
-            return convert(numb)
-        }
-        else if(count == 1) {
-            val numArr = numb.split('.')
-            if(numArr[1].isEmpty()) {
-                return convert(numArr[0])
+        val numArr = numb.split('.')
+        return when (numArr.size) {
+            1 -> convert(numArr[0])
+            2 -> {
+                if(numArr[1].isEmpty()) {
+                    convert(numArr[0])
+                }
+                else {
+                    "${convert(numArr[0])} point ${getAfterPoint(numArr[1])}"
+                }
             }
-            return "${convert(numArr[0])} Point ${getAfterPoint(numArr[1])}"
+            else -> "Error, invalid number format"
         }
-        return "Error, There are multiple points"
     }
-
 }
