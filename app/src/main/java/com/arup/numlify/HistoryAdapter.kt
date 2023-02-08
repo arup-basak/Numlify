@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.database.Cursor
 import android.view.LayoutInflater
@@ -53,6 +54,15 @@ class HistoryAdapter internal constructor(
             val clipData: ClipData = ClipData.newPlainText("Text Copied!", holder.textView.text.toString())
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             clipboard.setPrimaryClip(clipData)
+        }
+
+        holder.card.setOnLongClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here!")
+            intent.putExtra(Intent.EXTRA_TEXT, holder.textView.text.toString())
+            context.startActivity(Intent.createChooser(intent, "Share Via"))
+            false
         }
     }
 
