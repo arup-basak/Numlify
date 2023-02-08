@@ -9,13 +9,11 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var textView: TextView
     private lateinit var editText: EditText
     private lateinit var share: View
@@ -52,21 +50,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         editText.setOnEditorActionListener { _, actionId, event ->
-            if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
-                saveInDatabase(editText.text.toString(), textView.text.toString())
+            if (event?.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+                val value = editText.text.toString().trim()
+                val answer = textView.text.toString().trim()
+                if (value.isNotEmpty()) {
+                    val db = DBHelper(this)
+                    db.insert(value, answer)
+                }
             }
             false
         }
 
         textView.setOnClickListener {
             if(str.isNotEmpty()) {
-                copyText(str)
+                val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipData: ClipData = ClipData.newPlainText("Text Copied!", str)
+                clipboard.setPrimaryClip(clipData)
             }
         }
 
         share.setOnClickListener {
             if(str.isNotEmpty()) {
-                shareText(str)
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here!")
+                intent.putExtra(Intent.EXTRA_TEXT, str)
+                startActivity(Intent.createChooser(intent, "Share Via"))
             }
         }
 
@@ -76,41 +85,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun copyText(text: String) {
-        val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData: ClipData = ClipData.newPlainText("Text Copied!", text)
-        Toast.makeText(this, "Text Copied!", Toast.LENGTH_SHORT).show()
-        clipboard.setPrimaryClip(clipData)
+    private fun invisibleView(shouldBeVisible: Boolean) {
+        if (shouldBeVisible == (helpText.alpha != 0F)) return
+
+        val animation = if (shouldBeVisible) fadeIn else fadeOut
+        helpText.startAnimation(animation)
+        share.startAnimation(animation)
+        helpText.alpha = if (shouldBeVisible) 1F else 0F
+        share.alpha = if (shouldBeVisible) 1F else 0F
     }
 
-    private fun shareText(text: String) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here!")
-        intent.putExtra(Intent.EXTRA_TEXT, text)
-        startActivity(Intent.createChooser(intent, "Share Via"))
-    }
-
-
-    private fun saveInDatabase(value: String, answer: String?) {
-        val db = DBHelper(this)
-        if(answer.isNullOrEmpty()) {
-            db.insert(value, NumberToWord.run(value))
-        }
-        db.insert(value, answer)
-    }
-
-    private fun invisibleView(boolean: Boolean) {
-        if(boolean && helpText.alpha == 0F) {
-            helpText.startAnimation(fadeIn)
-            share.startAnimation(fadeIn)
-            helpText.alpha = 1F
-            share.alpha = 1F
-        }
-        else if (!boolean && helpText.alpha == 1F) {
-            helpText.startAnimation(fadeOut)
-            share.startAnimation(fadeOut)
-        }
-
-    }
 }
