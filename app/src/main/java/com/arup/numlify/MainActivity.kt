@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         share.alpha = 0.0F
 
         editText.addTextChangedListener {
-            str = NumberToWord.run(editText.text.toString())
+            str = NumberToWord.run(editText.text.toString(), 0)
 
             textView.text = str
             textView.startAnimation(fadeIn)

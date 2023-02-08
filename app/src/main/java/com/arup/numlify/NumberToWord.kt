@@ -17,8 +17,21 @@ internal object NumberToWord {
         }
     }
 
-    private fun convertToWord(numberString: String): String {
+    private fun convertToWord(numberString: String, type: Int): String {
         var input = numberString
+        val zero = mapOf(
+            "Zero(11)" to "",
+            "Zero(10)" to "",
+            "Zero(9)" to "",
+            "Zero(8)" to "",
+            "Zero(7)" to "",
+            "Zero(6)" to "",
+            "Zero(5)" to "",
+            "Zero(4)" to "",
+            "Zero(3)" to "",
+            "Zero(2)" to "",
+            "Zero(1)" to "",
+        )
         val specialCases = mapOf(
             "Onety One" to "Eleven",
             "Onety Two" to "Twelve",
@@ -37,24 +50,42 @@ internal object NumberToWord {
             " Zeroty" to "",
             " Zero" to "",
             "Onety" to "Ten",
-            "Thousand Hundred" to "Thousand",
-            "Lakh Thousand" to "Lakh",
-            "Crore Lakh" to "Crore"
         )
-        val replaceCases = mapOf(
-            "(0)" to "",
-            "(1)" to "ty ",
-            "(2)" to " Hundred ",
-            "(3)" to " Thousand ",
-            "(4)" to "ty ",
-            "(5)" to " Lakh ",
-            "(6)" to "ty ",
-            "(7)" to " Crore ",
-            "(8)" to "ty ",
-            "(9)" to " Hundred ",
-            "(10)" to " Thousand ",
-            "(11)" to " Lakh "
-        )
+        val replaceCases = if(type == 0) {
+            mapOf(
+                "(11)" to " Kharab ",
+                "(10)" to "(1)Arab ",
+                "(9)" to " Arab ",
+                "(8)" to "(1)Crore ",
+                "(7)" to " Crore ",
+                "(6)" to "(1)Lakh ",
+                "(5)" to " Lakh ",
+                "(4)" to "(1)Thousand ",
+                "(3)" to " Thousand ",
+                "(2)" to " Hundred ",
+                "(1)" to "ty ",
+                "(0)" to "",
+            )
+        } else {
+            mapOf(
+                "(11)" to "(2)Billion ",
+                "(10)" to "(1)Billion ",
+                "(9)" to " Billion ",
+                "(8)" to "(2)Million ",
+                "(7)" to "(1)Million ",
+                "(6)" to " Million ",
+                "(5)" to "(2)Thousand ",
+                "(4)" to "(1)Thousand ",
+                "(3)" to " Thousand ",
+                "(2)" to " Hundred ",
+                "(1)" to "ty ",
+                "(0)" to ""
+            )
+        }
+
+        for ((key, value) in zero) {
+            input = input.replace(key, value)
+        }
 
         for ((key, value) in replaceCases) {
             input = input.replace(key, value)
@@ -69,7 +100,7 @@ internal object NumberToWord {
         return number.map { ztn(it - '0') }.joinToString(" ").dropLast(0)
     }
 
-    private fun convert(numb: String): String {
+    private fun convert(numb: String, type: Int): String {
         val number = try {
             numb.toLong()
         } catch (_: Exception) {
@@ -78,20 +109,20 @@ internal object NumberToWord {
         val numberString = number.toString().mapIndexed { i, c ->
             "${ztn(c - '0')}(${number.toString().length - i - 1})"
         }.joinToString("")
-        return convertToWord(numberString)
+        return convertToWord(numberString, type)
     }
 
     @JvmStatic
-    fun run(numb: String): String {
+    fun run(numb: String, type:Int): String {
         val numArr = numb.split('.')
         return when (numArr.size) {
-            1 -> convert(numArr[0])
+            1 -> convert(numArr[0], type)
             2 -> {
                 if(numArr[1].isEmpty()) {
-                    convert(numArr[0])
+                    convert(numArr[0], type)
                 }
                 else {
-                    "${convert(numArr[0])} point ${getAfterPoint(numArr[1])}"
+                    "${convert(numArr[0], type)} point ${getAfterPoint(numArr[1])}"
                 }
             }
             else -> "Error, invalid number format"
